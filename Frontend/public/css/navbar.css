@@ -1,0 +1,171 @@
+/* Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 */
+
+#navbar {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    top: 0%;
+    background-color: #0d1752;
+    left: 0%
+}
+
+#navbar-icon {
+    color: white
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#content {
+    font-size: 20px;
+    text-decoration: none;
+    margin-top: 25px;
+    color: #00ccff;
+}
+
+#content a:visited {
+    color: inherit;
+}
+
+#logo {
+    position: relative;
+    margin-left: 5%;
+    font-style: italic;
+}
+
+#home_icon {
+    position: absolute;
+    left: 69%;
+    color: #00ccff;
+}
+
+#game_icon {
+    position: absolute;
+    left: 75%;
+   color: #00ccff
+}
+
+#profile_icon {
+    position: absolute;
+    left: 81%;
+    color: #00ccff
+}
+
+#cart_icon {
+    position: absolute;
+    left: 63%;
+    color: #00ccff;
+}
+
+#home_icon::before, #game_icon::before, #profile_icon::before, #cart_icon::before {
+    position: absolute;
+    z-index: 2;
+    transition: transform 0.3s ease-in-out;
+}
+
+#home_icon:hover::before, #game_icon:hover::before, #profile_icon:hover::before, #cart_icon:hover::before {
+    transform: translateX(-40px)
+}
+
+#home_icon::after, #game_icon::after, #profile_icon::after, #cart_icon::after {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateX(100%);
+    color: #00ccff;
+}
+
+#home_icon::after {
+    content: "Home";
+}
+
+#game_icon::after {
+    content: "Games";
+}
+
+#profile_icon::after {
+    content: "Profile";
+}
+
+#cart_icon::after {
+    content: "Cart"
+}
+
+#home_icon:hover::after, #game_icon:hover::after, #profile_icon:hover::after, #cart_icon:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+    padding-left: 10px;
+    height: 40px;
+    background-image: conic-gradient(transparent, transparent, transparent, #ee00ff);
+}
+
+#home_icon:hover::after {
+    width: 130px;
+}
+
+#game_icon:hover::after {
+    width: 150px;
+}
+
+#profile_icon:hover::after {
+    width: 145px;
+}
+
+#cart_icon:hover::after {
+    width: 110px
+}
+
+#home_icon a:visited, #game_icon a:visited, #profile_icon a:visited, #logout_icon a:visited, #admin_icon a:visited, #login_icon a:visited, #cart_icon a:visited, #yourgames a:visited {
+    color: inherit;
+}
+
+#login, #logout {
+    color: #00ccff;
+    left: 89%;
+    margin-top: 15px;
+    position: absolute;
+    font-size: 30px;
+}
+
+#admin {
+    color: #00ccff;
+    left: 50%;
+    position: absolute;
+    margin-top: 22px;
+    font-size: 25px
+}
+
+#yourgames {
+    color: #00ccff;
+    left: 15%;
+    position: absolute;
+    margin-top: 22px;
+    font-size: 25px
+}
+
+#admin:after, #login:after, #logout:after, #yourgames:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: 
+#0087ca;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+#admin:hover:after, #login:hover:after, #logout:hover:after, #yourgames:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

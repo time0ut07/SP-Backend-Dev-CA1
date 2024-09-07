@@ -1,0 +1,122 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/adminNavbar.css" rel="stylesheet" />
+    <link href="../../css/adminBack.css" rel="stylesheet" />
+    <link href="../../css/addPlatform.css" rel="stylesheet" />
+    <title>Admin Panel - Add Platform</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="admin_navbar" id="admin_navbar"></div>
+
+    <div class="back" id="back">
+        <a href="http://localhost:3001/admin_platform.html" id="back">
+            <i class="fas fa-backward" id="back_icon"></i>
+        </a>
+    </div>
+
+    <div class="start_container" id="start_container">
+        <h2 class="add_platform_title" id="add_platform_title">Add New Platform</h2>
+    
+        <form class="input_group" id="input_group">
+            <div class="platformname">
+                <label for="Platform_name">Platform Name:</label>
+                <input type="text" id="Platform_name" class="input" name="Platform_name"><br>
+            </div>
+            <div class="description">
+                <label for="Description">Description:</label>
+                <textarea type="text" id="Description" class="input" name="Description"></textarea><br><br>
+            </div>
+            <div class="buttons">
+                <input type="submit" id="submit" value="Submit">
+                <input type="reset" id="reset" value="Reset">
+            </div>
+            <div id="msg"></div>
+        </form>
+    </div>
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/adminNavbar.js"></script>
+    <script src="../../js/verifyAdmin.js"></script>
+
+    <script>
+        $(document).ready(() => {
+
+            try {
+                let userid = userData[0].userid
+            } catch {
+                location.assign('http://localhost:3001/error.html')
+            }
+
+            
+
+            $('#submit').click((event) => {
+                event.preventDefault(); // Prevent the default form submission behavior
+
+                var localStorageToken = localStorage.getItem('token');
+
+                if (!localStorageToken) {
+                    location.assign('http://localhost:3001/error.html')
+                    return
+                }
+
+                let headers = {
+                    authorization: 'Bearer ' + localStorageToken
+                }
+
+                let data = {
+                    platformname: $('#Platform_name').val(),
+                    description: $('#Description').val()
+                }
+
+                if (data.platformname == "" || data.description == "") {
+                    $('#msg').text("Fields cannot be empty");
+                    return
+                }
+
+                $.ajax({
+                    headers: headers,
+                    url: 'http://localhost:8081/add/platform',
+                    type: 'POST',
+                    data: JSON.stringify(data), 
+                    contentType: 'application/json', 
+                    dataType: 'json', 
+                    success: (data, status, xhr) => { 
+                        $('#msg').text("Success");
+                    
+                    },
+                    error: (xhr, status, err) => {
+                        console.log(err)
+                        if (err == "Unprocessable Entity") {
+                            $('#msg').text("Platform already exist")
+                        } else {
+                            $('#msg').text("Failed to add platform");
+                        }
+                    }
+                })
+                return false; 
+            })
+        });
+    </script>
+
+</body>
+
+
+
+</html>

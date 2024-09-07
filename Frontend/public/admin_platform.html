@@ -1,0 +1,110 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/adminNavbar.css" rel="stylesheet" />
+    <link href="../../css/admin_platform.css" rel="stylesheet" />
+    <link href="../../css/adminBack.css" rel="stylesheet" />
+    <title>Admin Panel - Platform</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="admin_navbar" id="admin_navbar"></div>
+
+    <div class="back" id="back">
+        <a href="http://localhost:3001/admin.html" id="back">
+            <i class="fas fa-backward" id="back_icon"></i>
+        </a>
+    </div>
+
+
+    <div class="start_container" id="start_container">
+        <h2 class="admin_platform_title" id="admin_platform_title">Platforms</h2>
+
+        <button type="button" class="button" id="button">
+            <a href="http://localhost:3001/addPlatform.html">
+                <div class="addplatform" id="addplatform">Add Platform
+                    <i class="fa-sharp fas fa-plus" id="goAdd"></i>
+                </div>
+            </a>
+        </button>
+
+        <div class="admin_platform_container" id="admin_platform_container">
+            <div class="platform_info" id="platform_info">
+                <div class="platform_id" id="platform_id">Id</div>
+                <div class="platform_title" id="platform_title">Title</div>
+                <div class="platform_description" id="platform_description">Description</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/adminNavbar.js"></script>
+    <script src="../../js/verifyAdmin.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            try {
+                let userid = userData[0].userid
+            } catch {
+                location.assign('http://localhost:3001/error.html')
+            }
+
+            var localStorageToken = localStorage.getItem('token');
+
+            if (!localStorageToken) {
+                location.assign('http://localhost:3001/error.html')
+                return
+            }
+
+            let headers = {
+                authorization: 'Bearer ' + localStorageToken
+            }
+
+            // appending platforms_container
+            $.ajax({
+                headers: headers,
+                url: 'http://localhost:8081/get/platforms',
+                type: 'GET',
+                dataType: 'json',
+                success: (data, status, xhr) => {
+
+                    var tempHTML = ''
+                    data.forEach((platform) => {
+                        tempHTML += `
+                             <div class="platform_info" id="platform_info">
+                                <div class="platform_id" id="platform_id">${platform.platformid}</div>
+                                <div class="platform_title" id="platform_title">${platform.platformname}</div>
+                                <div class="platform_description" id="platform_description">${platform.description}</div>
+                            </div> 
+                       `});
+
+                    $('#admin_platform_container').append(tempHTML)
+                },
+                error: (xhr, status, err) => {
+                    console.log(err);
+                }
+            });
+
+        })
+    </script>
+
+</body>
+
+
+
+</html>

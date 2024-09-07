@@ -1,0 +1,257 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  letter-spacing: 1px;
+  background-color: #0c1022;
+}
+
+#cart_container {
+    position: absolute;
+    width: 20%;
+    height: 80%;
+    padding-bottom: 2%;
+    background-color: #B9A0B9;
+    text-align: center;
+    border-style: solid;
+    border-radius: 20px;
+    margin-top: 7%;
+    margin-left: 2%;
+    max-height: 99999vh;
+}
+
+#cart_title {
+  margin-top: 5%;
+  font-size: 30px;
+}
+
+#game_info {
+  text-align: left;
+  margin-left: 5%;
+  margin-top: 7%;
+  font-size: 20px;
+  padding-bottom: 5%
+}
+
+#creditCard_container {
+  position: absolute;
+  color: #00ccff;
+  margin-left: 25%;
+  margin-top: 8%;
+  border: solid;
+  height: 250px;
+  width: 70%;
+  border-radius: 20px;
+}
+
+#title {
+  text-align: center;
+  padding-top: 2%;
+  font-size: 20px;
+  padding-bottom: 1%
+}
+
+#radio {
+  position: absolute;
+  color: white;
+  margin-top: 35px;
+  margin-left: 15%;
+}
+
+#creditCard_container #input_group {
+  margin-left: 35%;
+  font-size: 20px;
+  color: white
+}
+
+#input_group input[type="text"] {
+  color: black
+}
+
+#name {
+  padding-top: 2%;
+  margin-left: 2%;
+}
+
+#number {
+  margin-left: 2%;
+  margin-top: 2%
+}
+
+#expiry {
+  margin-left: 2%;
+  margin-top: 2%
+}
+
+#treedigit {
+  margin-left: 40%;
+  margin-top: -5%
+}
+
+#name input[type="text"], #number input[type="text"] {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 300px
+}
+
+#expiry input[type="text"], #treedigit input[type="text"] {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 60px
+}
+
+#billing_information {
+  position: absolute;
+  border: solid;
+  color: white;
+  margin-top: 25%;
+  margin-left: 25%;
+  border: solid;
+  border-radius: 20px;
+  width: 70%;
+  color: #00ccff
+}
+
+#billing_information #title {
+  padding-top: 2.5%
+}
+
+#billing_information #input_group {
+  color: white;
+  font-size: 20px
+}
+
+#firstname, #city, #postalCode {
+  margin-left: 20%;
+  font-size: 20px;
+  margin-top: 1%
+}
+#postalCode {
+  width: 400px
+}
+
+#lastname, #country, #contactNum {
+  margin-left: 55%;
+  margin-top: -3%
+}
+
+#firstname input[type="text"], #lastname input[type="text"], #country input[type="text"], #city input[type="text"], #postalCode input[type="text"], #contactNum input[type="text"] {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 150px
+}
+
+#add1, #add2 {
+  margin-left: 20%;
+  margin-top: 1%
+}
+
+#add1 input[type="text"], #add2 input[type="text"] {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 400px
+}
+
+
+#button_stuff {
+    padding-top: 7%;
+    text-align: center;
+    margin-top: 42%;
+    margin-left: 40%;
+    padding-bottom: 5%;
+    position:relative;
+}
+
+
+.button {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    justify-content: center;
+
+}
+
+.button:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.button:active {
+    color: #0c1022
+}
+
+.button:active:after {
+    background: transparent;
+}
+
+.button:hover:before {
+    opacity: 1;
+}
+
+.button:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #0c1022;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+.button p {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 5px
+}
+
+#editCart {
+  position: relative;
+  margin-top: 500%;
+  margin-left: 250%
+}
+
+#pay {
+  position: absolute;
+  margin-top: -128%;
+  margin-left: 500%
+}
+
+
+#resetForm {
+  position: absolute;
+  margin-top: -218%;
+  margin-left: 850%
+}

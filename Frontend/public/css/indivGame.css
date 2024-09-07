@@ -1,0 +1,514 @@
+/* Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  letter-spacing: 1px;
+  background-color: #0c1022;
+}
+
+
+
+
+
+.games_container{
+    position: absolute;
+    width: 1400px;
+    height: 470px;
+    max-width: 1400px;
+    max-height: 470px;
+    background: #040717;
+    border-radius: 50px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 150px;
+    margin-left: 90px
+}
+.games_container::before{
+    position: absolute;
+    width: 370%;
+    height: 370%;
+    content: '';
+    background-image: conic-gradient(transparent, transparent, transparent, #ee00ff);
+    animation: rotate_border 6s linear infinite;
+}
+.games_container::after{
+    
+    position: absolute;
+    width: 370%;
+    height: 370%;
+    content: '';
+    background-image: conic-gradient(transparent, transparent, transparent, #00ccff);
+    animation: rotate_border 6s linear infinite;
+    animation-delay: -3s;
+}
+@keyframes rotate_border{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+.games{
+    position: absolute;
+    content: '';
+    border-radius: 50px 5px;
+    inset: 5px;
+    padding: 50px 40px;
+    z-index: 10;
+    color: #00ccff;
+    background-color: #0c1022;
+} 
+
+.games h2{
+    font-size: 40px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.games #text {
+    color: white;
+    padding-top: 2%;
+    text-align: center;
+    font-size: 30px
+}
+
+.more_info {
+    text-align: center;
+    margin-top: 3%
+}
+
+.price_title, .platform_title, .category_title {
+    font-size: 30px;
+}
+
+.price, .platforms, .categories {
+    font-size: 20px;
+    color: white;
+}
+
+.platform_title, .platforms {
+    margin-left: 25%;
+}
+
+.platform_title {
+    margin-top: -4.5%;
+}
+
+.category_title, .categories {
+    margin-left: 60%;
+}
+
+.category_title {
+    margin-top: -4.5%
+}
+
+.games img {
+  position: absolute;
+  margin-top: 130px;
+  margin-left: 200px;
+  object-fit: contain;
+  mix-blend-mode:lighten;
+  height: 250px;
+  width: 250px;
+}
+
+
+
+#button_stuff {
+    padding-top: 7%;
+    text-align: center;
+    margin-left: 37%
+}
+
+.button {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    justify-content: center;
+
+}
+
+.button:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.button:active {
+    color: #0c1022
+}
+
+.button:active:after {
+    background: transparent;
+}
+
+.button:hover:before {
+    opacity: 1;
+}
+
+.button:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #0c1022;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+.button p {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+#buy_btn {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 5px
+}
+
+#button_msg {
+    position: absolute;
+    margin-left: 10%;
+    margin-top: 1%;
+    font-size: 25px;
+}
+
+#review {
+    margin-left: 35%;
+}
+
+
+
+#back_icon {
+    position: absolute;
+   color: #00ccff;
+   margin-top: 0.8%;
+    margin-left: 15%;
+    font-size: 30px;
+}
+
+
+#back_icon::before {
+    position: absolute;
+    z-index: 2;
+    transition: transform 0.3s ease-in-out;
+}
+
+#back_icon:hover::before {
+    transform: translateX(-40px)
+}
+
+#back_icon::after {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateX(100%);
+    color: #00ccff;
+}
+
+#back_icon::after {
+    content: "Back";
+}
+
+
+#back_icon:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+    padding-left: 10px;
+    height: 40px;
+    background-image: conic-gradient(transparent, transparent, transparent, #ee00ff);
+}
+
+#back_icon:hover::after {
+    width: 160px;
+}
+
+#back_icon a:visited {
+    color: inherit;
+}
+
+
+
+
+
+
+
+.review_container{
+    position: absolute;
+    width: 1300px;
+    height: 300px;
+    max-width: 4000px;
+    max-height: 4700px;
+    background: #040717;
+    border-radius: 50px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 900px;
+    left: 8%;
+    background-color: #00ccff;
+}
+
+.review_container:hover::before {
+  position: absolute;
+    width: 370%;
+    height: 470%;
+    content: '';
+    background-image: conic-gradient(transparent, transparent, transparent, #ee00ff);
+    animation: rotate_border 6s linear infinite;
+}
+
+.review_container:hover::after {
+  position: absolute;
+    width: 370%;
+    height: 470%;
+    content: '';
+    background-image: conic-gradient(transparent, transparent, transparent, #00ccff);
+    animation: rotate_border 6s linear infinite;
+    animation-delay: -3s;
+}
+
+@keyframes rotate_border{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.review_title {
+    position: absolute;
+    color: white;
+    margin-top: 1150px;
+    font-size: 35px;
+    margin-left: 43.5%
+}
+
+.reviews{
+    position: absolute;
+    content: '';
+    background-color: #0c1022;
+    border-radius: 50px 5px;
+    inset: 5px;
+    padding: 60px 40px;
+    z-index: 10;
+    color: #00ccff;
+    text-align: center;
+} 
+
+.username {
+    font-size: 50px;
+    margin-top: -2%
+}
+
+.ratings {
+    font-size: 35px;
+    margin-top: 3%
+}
+
+.text {
+    margin-top: 3%;
+   font-size: 30px
+}
+
+
+#msg {
+    position: relative;
+    margin-top: 1250px;
+    color: white;
+    margin-left: 40.5%;
+    padding-bottom: 5%
+}
+
+#write_review {
+    position: absolute;
+    margin-top: 750px;
+    margin-left: 40%;
+    color: white
+}
+
+#write_title {
+    font-size: 40px;
+}
+
+/* use reverse flexbox to take advantage of flex-direction: reverse */
+.star-rating {
+  display: flex;
+  align-items: center;
+  width: 160px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin: 40px 80px;
+  position: relative;
+}
+/* hide the inputs */
+.star-rating input {
+  display: none;
+}
+/* set properties of all labels */
+.star-rating > label {
+  width: 30px;
+  height: 30px;
+  font-family: Arial;
+  font-size: 30px;
+  transition: 0.2s ease;
+  color: orange;
+}
+/* give label a hover state */
+.star-rating label:hover {
+  color: #ff69b4;
+  transition: 0.2s ease;
+}
+.star-rating label:active::before {
+  transform:scale(1.1);
+}
+
+/* set shape of unselected label */
+.star-rating label::before {
+  content: '\2606';
+  position: absolute;
+  top: 0px;
+  line-height: 26px;
+}
+/* set full star shape for checked label and those that come after it */
+.star-rating input:checked ~ label:before {
+  content:'\2605';
+}
+
+@-moz-document url-prefix() {
+  .star-rating input:checked ~ label:before {
+  font-size: 36px;
+  line-height: 21px;
+  }
+}  
+
+#write_text {
+    width: 500px;
+    height: 50px;
+    text-indent: 10px;
+    margin-left: -17%;
+    margin-top: 0%;
+}
+
+#submit {
+    position: absolute;
+    margin-top: 15%;
+    margin-left: -73%
+}
+
+#signInReview {
+    position: absolute;
+    font-size: 20px;
+    margin-top: 18%;
+    margin-left: -11%
+}
+
+#successReview {
+    position: absolute;
+    font-size: 20px;
+    margin-top: 20%;
+    margin-left: 9%
+}
+
+
+
+
+
+
+/* 
+
+#btn-flip {
+  opacity: 1;
+  outline: 0;
+  color: #fff;
+  line-height: 40px;
+  position: relative;
+  text-align: center;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:hover {
+    &:after {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+
+    &:before {
+      opacity: 0;
+      transform: translateY(50%) rotateX(90deg);
+    }
+  }
+
+  &:after {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    color: #ee00ff;
+    display: block;
+    transition: 0.5s; 
+    position: absolute;
+    background: #adadaf;
+    content: 'REMOVE';
+    transform: translateY(-50%) rotateX(90deg);
+  }
+
+  &:before {
+    top: 0;
+    left: 0;
+    opacity: 1;
+    color: #00ccff;
+    display: block;
+    padding: 0 30px;
+    line-height: 40px;
+    transition: 0.5s;
+    position: relative;
+    background: white;
+    content: 'BUYNOW!';
+    transform: translateY(0) rotateX(0);
+  }
+}  */

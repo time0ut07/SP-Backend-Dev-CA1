@@ -1,0 +1,173 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/games.css" rel="stylesheet" />
+    <title>Games</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="heading" id="heading">
+        <div class="title" id="title">
+            <a href="#" data-replace="Games" id="Games">
+                <span>Games</span>
+            </a>
+        </div>
+
+        <div class="input_group" id="input_group">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search_box" class="input_text" placeholder="Find games...">
+        </div>
+        
+        <div class="dropdown" id="dropdown"> 
+            <select name="dropPlatforms" id="dropPlatforms">
+                <option value="#">All platforms</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="Your_Games">
+        <a href="http://localhost:3001/userGames.html" id="Your_Games">
+            Your Games
+        </a>
+    </div>
+
+    
+    <div class="startOfGames" id="startOfGames">
+    </div>
+
+    <div class="empty_container"></div>
+
+    <div id="msg">
+        
+    </div>
+
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/logout.js"></script>
+    <script src="./js/games.js"></script>
+    
+    <script>
+        $(document).ready(() => {
+            // appending games_container
+            $.ajax({
+                url: 'http://localhost:8081/get/games',
+                type: 'GET',
+                dataType: 'json',
+                success: (data, status, xhr) => {    
+                    clearGamesContainer()                    
+                    data.forEach((game) => {
+                        appendGamesContainer(game);
+                    });
+                },
+                error: (xhr, status, err) => {
+                    console.log(err);
+                }
+            });
+
+            // appending dropdown platform
+            $.ajax({
+                url: 'http://localhost:8081/get/platforms',
+                type: 'GET',
+                dataType: 'json',
+                success: (data, status, xhr) => {
+
+                    var tempHTML = ""
+                    data.forEach((platform) => {
+                        tempHTML += `<option value="${platform.platformname}">${platform.platformname}</option>`
+                    })
+                    $('#dropPlatforms').append(tempHTML)
+
+                },
+                error: (xhr, status, err) => {
+                    console.log(err)
+                }
+            })
+
+
+
+             // search function + platform
+            const searchBox = document.getElementById('search_box');
+            const dropdown = document.getElementById('dropPlatforms');
+            const gamesContainer = document.getElementById('startOfGames'); // Updated target element
+
+            searchBox.addEventListener('keyup', performSearch);
+            dropdown.addEventListener('change', performSearch);
+
+            function performSearch() {
+                clearGamesContainer()   
+                var games = searchBox.value;
+                var platform = dropdown.value;
+
+                if (platform == "#" && games == "") {
+                    $.ajax({
+                        url: 'http://localhost:8081/get/games',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: (data, status, xhr) => {
+                            clearGamesContainer()
+                            data.forEach((game) => {
+                                appendGamesContainer(game);
+
+                            });
+
+                        },
+                        error: (xhr, status, err) => {
+                            console.log(err);
+                        }
+                    });
+                }
+
+                if (platform == "#") {                    
+                    platform = ['PC', 'PlayStation', 'XBox', 'Nintendo Switch']
+                } // totally didnt hard code this and forgor to change
+
+                let data = {
+                    title: games,
+                    platformname: platform
+                }
+
+                $.ajax({
+                    url: "http://localhost:8081/search/game",
+                    type: "GET",
+                    data: data,
+                    dataType: 'json',
+                    success: (data, status, xhr) => {
+                        clearGamesContainer()
+                        if (data.length != 0) {
+                            data.forEach((game) => {
+                                console.log(game)
+                                appendGamesContainer(game);
+                            });
+                        } else {
+                            $('#msg').text('Sorry! No such game exists here/on this platform...')
+                        }
+
+                    },
+                    error: (xhr, status, err) => {
+                        console.log(err)
+                    }
+                });
+            }
+
+        });
+    </script>
+
+
+</body>
+
+</html>

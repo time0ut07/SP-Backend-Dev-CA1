@@ -1,0 +1,141 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/cart.css" rel="stylesheet" />
+    <title>Shopping Cart</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="cart_title" id="cart_title">
+        <h2>Shopping Cart</h2>
+    </div>
+
+    <div class="bottom_part" id="bottom_part">
+        
+    </div>
+
+    <div class="cart_container" id="cart_container">
+        <div class="game_info" id="game_info">
+            <div class="game_title" id="game_title">Title</div>
+            <div class="game_platform" id="game_platform">Platform</div>
+            <div class="game_price" id="game_price">Price</div>
+            <div class="game_time" id="game_time">Added at</div>
+            <div class="game_rem" id="game_rem">Remove</div>
+        </div>
+    </div>
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/logout.js"></script>
+    <script src="../../js/cart.js"></script>
+
+    <script>
+        $(document).ready(() => {
+
+            var localStorageToken = localStorage.getItem('token');
+
+            if (!localStorageToken) {
+                $('#cart_container').append(`<p>Sign in now to buy exclusive games from sp_games, click <a style="text-decoration: underline;" href="http://localhost:3001/login.html">here</a> to sign in or click <a style="text-decoration: underline;" href="http://localhost:3001/signup.html">here</a> to sign up!</p>`)
+                return
+            }
+
+            let headers = {
+                authorization: 'Bearer ' + localStorageToken
+            }
+
+            let data = {
+                userid: userData[0].userid
+            }
+
+            $.ajax({
+                headers: headers,
+                url: 'http://localhost:8081/view/cart',
+                type: 'GET',
+                data: data,
+                contentType: "application/json",
+                dataType: 'json',
+                success: (data, status, xhr) => {
+                    if (data.length != 0) {
+
+                        totalPrice = 0
+                        var counter = 1
+                        var tempHTML = ''
+                        data.forEach((info) => {
+                            tempHTML += `
+                                <div class="game_info" id="game_info">
+                                    <div class="game_title" id="game_title">${info.title}</div>
+                                    <div class="game_platform" id="game_platform">${info.platformname}</div>
+                                    <div class="game_price" id="game_price">$${info.price.toFixed(2)}</div>
+                                    <div class="game_time" id="game_time">${formatTimestamp(info.created_at)}</div>
+                                    <div class="game_rem" id="game_rem">
+                                        <button type="button" id="rem_btn" class="btn${counter}">
+                                            <i class="fas fa-trash" id="rem_icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                        `
+                        counter++
+                        totalPrice += info.price
+                        });
+
+                        $('#cart_container').append(tempHTML)
+                        $('#bottom_part').append(`<div class="totalPrice" id="totalPrice">Total Price: $${totalPrice.toFixed(2)}</div><button type="button" id="checkOut" class="checkOut"><a href="http://localhost:3001/creditCard.html">Checkout</a></button>`)
+                    } else {
+                        $('#cart_container').append(`<p>You currently have no items in cart, click <a href="http://localhost:3001/games.html" style="text-decoration: underline">here</a> to view games</p>`)
+                    }   
+                },
+                error: (xhr, status, err) => {
+                    console.log(err)
+                }
+            })
+
+            $('#cart_container').on('click', '#rem_btn', (event) => {
+                event.preventDefault();
+
+                var clickedButton = $(event.target);
+                var buttonClass = clickedButton.attr('class');
+                var buttonNumber = buttonClass.match(/btn(\d+)/);
+
+
+                    var gameInfoContainer = clickedButton.closest('.game_info');
+
+                    data = {
+                        userid: userData[0].userid,
+                        title: gameInfoContainer.find('.game_title').text(),
+                        platformname: gameInfoContainer.find('.game_platform').text()
+                    }
+
+                    $.ajax({
+                        url: "http://localhost:8081/del/cart",
+                        type: "DELETE",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: (data, status, xhr) => {
+                            gameInfoContainer.remove();
+                            location.reload()
+                        },
+                        error: (xhr, status, err) => {
+                            console.log(err)
+                        }
+                    })
+                })
+        })
+    </script>
+</body>
+
+</html>

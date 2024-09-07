@@ -1,0 +1,386 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/indivGame.css" rel="stylesheet" />
+    <title>View</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="games_container" id="games_container">
+        <div class="games">
+            <img src="/images/Valorant.jpeg" alt="" class="img" id="img">
+            <div class="back" id="back">
+                <a href="http://localhost:3001/games.html" id="games">
+                    <i class="fas fa-backward" id="back_icon"></i>
+                </a>
+            </div>
+            <h2>Title</h2>
+            <p id="text">Description</p>
+            <div class="more_info" id="more_info">
+                <div class="price_title" id="price_title">Price</div>
+                <div class="price" id="price">$100</div>
+                <div class="platform_title" id="platform_title">Platform</div>
+                <div class="platforms" id="platforms">PC</div>
+                <div class="category_title" id="category_title">Category</div>
+                <div class="categories" id="categories">Shooter, FPS</div>
+            </div>
+
+            <div class="button_stuff" id="button_stuff">
+                <button class="button" id="buy_btn" type="button">BUY NOW</button>
+
+                <button class="button" id="review" type="button">
+                    <a href="#">
+                        <p>Review</p>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="write_review" id="write_review">
+        <p class="write_title" id="write_title">Write your review!</p>
+        <div class="star-rating">
+            <input type="radio" name="stars" id="star-a" value="5" />
+            <label for="star-a"></label>
+        
+            <input type="radio" name="stars" id="star-b" value="4" />
+            <label for="star-b"></label>
+        
+            <input type="radio" name="stars" id="star-c" value="3" />
+            <label for="star-c"></label>
+        
+            <input type="radio" name="stars" id="star-d" value="2" />
+            <label for="star-d"></label>
+        
+            <input type="radio" name="stars" id="star-e" value="1" />
+            <label for="star-e"></label>
+        </div>
+        <input type="text" id="write_text" class="write_text" placeholder="Write your review here!">
+        <button class="button" id="submit" type="button">
+            <a href="">
+                <p>Submit</p>
+            </a>
+        </button>
+        <div id="signInReview"></div>
+        <div id="successReview"></div>
+    </div>
+
+    <div class="review_title">
+        <h2 id="review_title">Reviews</h2>
+
+    </div>
+
+    <div class="start" id="start"></div>
+
+    <div class="msg" id="msg"></div>
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/logout.js"></script>
+    <script src="../../js/indivGame.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            
+            // appending information onto page
+
+            var userUrl = window.location.href;
+            var userUrl = userUrl.replace("3001", "8081");
+
+            $('#games_container').empty();
+    
+            // games_container
+            $.ajax ({
+                url: userUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: (data, status, xhr) => {
+                    
+                    $('#games_container').append(`
+                        <div class="games">
+                            <img src="${data[0].image_filepath}.jpeg" alt="" class="img" id="img">
+                            <div class="back" id="back">
+                                <a href="http://localhost:3001/games.html" id="games">
+                                    <i class="fas fa-backward" id="back_icon"></i>
+                                </a>
+                            </div>
+                            <h2 id="game_title">${data[0].title}</h2>
+                            <p id="text">${data[0].description}</p>
+                            <div class="more_info" id="more_info">
+                                <div class="price_title" id="price_title">Price</div>
+                                <div class="price" id="price">$${data[0].price.toFixed(2)}</div>
+                                <div class="platform_title" id="platform_title">Platform</div>
+                                <div class="platforms" id="platforms">${data[0].platformname}</div>
+                                <div class="category_title" id="category_title">Category</div>
+                                <div class="categories" id="categories">${data[0].categories}</div>
+                            </div>
+
+                            <div class="button_stuff" id="button_stuff">
+                                <div id="button_msg"></div>
+
+                                <button class="button" id="review" type="button">
+                                    <a href="#review_title" onclick="scrollToReviews()">
+                                        <p>Reviews</p>
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    `)
+                    try {
+                        let check = {
+                            userid: (userData[0].userid),
+                            title: ($('#game_title').text()),
+                            platformname: ($('#platforms').text())
+                        };
+
+                        $.ajax({
+                            url: "http://localhost:8081/check/cart",
+                            type: "GET",
+                            data: check,
+                            contentType: "application/json",
+                            dataType: "json",
+                            success: (data, status, xhr) => {
+                                if (data.length == 0) {
+                                    $("#button_stuff").append('<button class="button" id="buy_btn" class="buy" data-cart="REMOVE" type="button" style="position: absolute; margin-left: -38%" >BUY NOW</button>');
+                                } else {
+                                    $("#button_stuff").append('<button class="button" id="buy_btn" data-cart="REMOVE" type="button" style="position: absolute; margin-left: -38%" >REMOVE</button>');
+                                }
+
+                                let checkOwn = {
+                                    userid: (userData[0].userid),
+                                    title: ($('#game_title').text()),
+                                    platformname: ($('#platforms').text())
+                                };
+
+                                $.ajax({
+                                    url: 'http://localhost:8081/user/games',
+                                    type: "GET",
+                                    data: checkOwn,
+                                    contentType: "application/json",
+                                    dataType: "json",
+                                    success: (data, status, xhr) => {
+                                        if (data.length == 1) {
+                                            // User owns the game, show the message
+                                            $("#button_stuff").empty();
+                                            $("#button_stuff").append('<div id="button_msg" style="margin-left: 5%;">You already owned this game</div>');
+                                            $("#button_stuff").append('<button class="button" id="review" type="button"><a href = "#review_title" onclick = "scrollToReviews()"><p>Reviews</p></a ></button>');
+                                        }
+                                    },
+                                    error: (xhr, status, err) => {
+                                        console.log(err)
+                                    }
+                                })
+
+
+
+                            },
+                            error: (xhr, status, err) => {
+                                console.log(err);
+                            }
+                        });
+                    } catch (error) {
+                        // Handle the error here
+                        $('#button_msg').append("Sign in to buy games!")
+                    }
+
+                    // review_container
+                    $.ajax({
+                        url: `http://localhost:8081/reviews?gameid=${data[0].gameid}`,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: (data2, status, xhr) => {
+                            
+                            if (data2.length != 0) {
+                                $('#review_container').empty();
+
+                                let tempReview = "";
+                                var margin = 1250
+
+                                data2.forEach(review => {
+
+                                    let stars = "";
+                                    for (let i = 0; i < review.rating; i++) {
+                                        stars += '<span class="fas fa-star"></span>';
+                                    }
+
+                                    for (let i = 0; i < 5 - review.rating; i++) {
+                                        stars += '<span class="far fa-star"></span>';
+                                    }
+
+                                    tempReview += `
+                                    <div class="review_container" id="review_container" style="margin-top: ${margin}px">
+                                        <div class="reviews" id="reviews">
+                                            <div class="username" id="username">${review.username}</div>
+
+                                            <div class="ratings" id="ratings">
+                                                ${stars}
+                                            </div>
+                                            <div class="text" id="text">${review.content}</div>
+                                        </div>
+                                    </div>
+                                    `
+                                    margin += 350
+                                })
+
+                                $('#start').append(tempReview);
+
+                            } else {
+                                
+                                $('#msg').text("No reviews for this game... be the first!");
+                            }
+                        },
+                        error: (xhr, status, err) => {
+                            console.log(err)
+                        }
+                    })
+             
+                },
+                error: (xhr, status, err) => {
+                    console.log(err);
+                }
+            })
+
+
+            $('#submit').click(() => {
+                event.preventDefault(); // Prevent form submission
+                var localStorageData = localStorage.getItem('userData');
+                var localStorageToken = localStorage.getItem('token');
+
+                if (!localStorageToken) {
+                    $('#signInReview').text("You are required to be signed in to write a review")
+                    return
+                }
+
+                var userData = JSON.parse(localStorageData);
+
+                let headers = {
+                    authorization: 'Bearer ' + localStorageToken
+                }
+
+                var urlPath = window.location.pathname;
+                var gameIdRegex = /\/game\/(\d+)\/\w+/;
+                var match = urlPath.match(gameIdRegex);
+                if (match) {
+                    var gameId = match[1];
+                }
+
+                if ($('input[name="stars"]:checked').val() == null) {
+                    var rating = 0
+                } else {
+                    var rating = $('input[name="stars"]:checked').val()
+                }
+
+                console.log($('#write_text').val())
+                if ($('#write_text').val() == "") {
+                    $('#successReview').text("Content cannot be empty!")
+                    return
+                } else {
+                    content = $('#write_text').val()
+                }
+
+                data = {
+                    userid: userData[0].userid,
+                    gameid: gameId,
+                    content: content,
+                    rating: rating
+                }
+
+                $.ajax({
+                    headers: headers,
+                    url: 'http://localhost:8081/add/review', 
+                    type: 'POST',
+                    data: JSON.stringify(data), 
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: (data, status, xhr) => {
+                        location.reload()
+                    },
+                    error: (xhr, status, err) => {
+                        console.log(err);
+                    }
+                })
+            })
+            
+
+
+            // add to cart/remove from cart
+            // button on click (buy now)
+
+            $(document).on('click', '#buy_btn', () => {
+                let buttonText = $('#buy_btn').text();
+                var localStorageData = localStorage.getItem('userData');
+                var userData = JSON.parse(localStorageData);
+
+                if (buttonText == "BUY NOW") {
+                    $('#buy_btn').empty()
+                    $('#buy_btn').append('Remove')
+
+                    let data = {
+                        userid: (userData[0].userid),
+                        title: ($('#game_title').text()),
+                        platformname: ($('#platforms').text())
+                    }
+
+                    $.ajax({
+                        url: "http://localhost:8081/add/cart",
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: (data, status, xhr) => {
+                            console.log(data)
+                        },
+                        error: (xhr, status, err) => {
+                            console.log(err)
+                        }
+                    })
+
+                } else {
+                    $('#buy_btn').empty()
+                    $('#buy_btn').append('BUY NOW')
+
+                    let data = {
+                        userid: (userData[0].userid),
+                        title: ($('#game_title').text()),
+                        platformname: ($('#platforms').text())
+                    }
+
+                    $.ajax({
+                        url: "http://localhost:8081/del/cart",
+                        type: "DELETE",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: (data, status, xhr) => {
+                            console.log(data)
+                        },
+                        error: (xhr, status, err) => {
+                            console.log(err)
+                        }
+                    })
+                }
+            });
+        })
+
+
+            
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/adminNavbar.css" rel="stylesheet" />
+    <link href="../../css/admin_game.css" rel="stylesheet" />
+    <link href="../../css/adminBack.css" rel="stylesheet" />
+    <title>Admin Panel - Game</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="admin_navbar" id="admin_navbar"></div>
+
+    <div class="back" id="back">
+        <a href="http://localhost:3001/admin.html" id="back">
+            <i class="fas fa-backward" id="back_icon"></i>
+        </a>
+    </div>
+
+    <div class="start_container" id="start_container">
+        <h2 class="admin_game_title" id="admin_game_title">Games</h2>
+
+        <button type="button" class="button" id="button">
+            <a href="http://localhost:3001/addGame.html">
+                <div class="addGame" id="addGame">Add Game
+                    <i class="fa-sharp fas fa-plus" id="goAdd"></i>
+                </div>
+            </a>
+        </button>
+
+        <div class="input_group" id="input_group">
+            <input type="text" id="search_box" class="input_text" placeholder="Filter games...">
+        
+        
+            <div class="dropdown" id="dropdown">
+                <select name="dropPlatforms" id="dropPlatforms">
+                    <option value="#">Platforms</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="admin_game_container" id="admin_game_container">
+            <div class="game_info" id="game_info">
+                <div class="game_id" id="game_id">Id</div>
+                <div class="game_title" id="game_title">Title</div>
+                <div class="game_platform" id="game_platform">Platform</div>
+                <div class="game_category" id="game_category">Year</div>
+                <div class="game_price" id="game_price">Price</div>    
+            </div>
+        </div>
+    </div>
+
+    <div id="msg"></div>
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/adminNavbar.js"></script>
+    <script src="../../js/verifyAdmin.js"></script>
+
+    <script>
+        $(document).ready(() => {
+
+            try {
+                let userid = userData[0].userid
+            } catch {
+                location.assign('http://localhost:3001/error.html')
+            }
+
+
+                // appending games_container
+                $.ajax({
+                    url: 'http://localhost:8081/get/games',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: (data, status, xhr) => {
+
+                        var tempHTML = ''
+                        data.forEach((game) => { 
+                            tempHTML += `
+                             <div class="game_info" id="game_info">
+                                <div class="game_id" id="game_id">${game.gameid}</div>
+                                <div class="game_title" id="game_title">${game.title}</div>
+                                <div class="game_platform" id="game_platform">${game.platformname}</div>
+                                <div class="game_category" id="game_category">${game.year}</div>
+                                <div class="game_price" id="game_price">$${game.price}</div>
+                            </div> 
+                       `});
+
+                       $('#admin_game_container').append(tempHTML)
+                    },
+                    error: (xhr, status, err) => {
+                        console.log(err);
+                    }
+                });
+
+                // appending dropdown platform
+                $.ajax({
+                    url: 'http://localhost:8081/get/platforms',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: (data, status, xhr) => {
+
+                        var tempHTML = ""
+                        data.forEach((platform) => {
+                            tempHTML += `<option value="${platform.platformname}">${platform.platformname}</option>`
+                        })
+                        $('#dropPlatforms').append(tempHTML)
+
+                    },
+                    error: (xhr, status, err) => {
+                        console.log(err)
+                    }
+                })
+
+                 // search function + platform
+            const searchBox = document.getElementById('search_box');
+            const dropdown = document.getElementById('dropPlatforms');
+            const gamesContainer = document.getElementById('startOfGames'); // Updated target element
+
+            searchBox.addEventListener('keyup', performSearch);
+            dropdown.addEventListener('change', performSearch);
+
+            function performSearch() {
+
+                const gamesContainer = document.getElementById("admin_game_container");
+                gamesContainer.innerHTML = '';
+
+                var games = searchBox.value;
+                var platform = dropdown.value;
+
+                if (platform == "#" && games == "") {
+                    $.ajax({
+                        url: 'http://localhost:8081/get/games',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: (data, status, xhr) => {
+                            var tempHTML = ''
+                            data.forEach((game) => {
+                                tempHTML += `
+                                    <div class="game_info" id="game_info">
+                                        <div class="game_id" id="game_id">${game.gameid}</div>
+                                        <div class="game_title" id="game_title">${game.title}</div>
+                                        <div class="game_platform" id="game_platform">${game.platformname}</div>
+                                        <div class="game_category" id="game_category">${game.year}</div>
+                                        <div class="game_price" id="game_price">$${game.price}</div>
+                                    </div> 
+                            `});
+                            
+                            $('#admin_game_container').append(`
+                                    <div class="game_info" id="game_info">
+                                        <div class="game_id" id="game_id">Id</div>
+                                        <div class="game_title" id="game_title">Title</div>
+                                        <div class="game_platform" id="game_platform">Platform</div>
+                                        <div class="game_category" id="game_category">Year</div>
+                                        <div class="game_price" id="game_price">Price</div>   
+                                    </div>
+                                </div>
+                            `)
+                            $('#admin_game_container').append(tempHTML)
+                        },
+                        error: (xhr, status, err) => {
+                            console.log(err);
+                        }
+                    });
+                }
+
+                if (platform == "#") {
+                    platform = ['PC', 'PlayStation', 'XBox', 'Nintendo Switch']
+                }
+
+                let data = {
+                    title: games,
+                    platformname: platform
+                }
+                console.log(data)
+
+                $.ajax({
+                    url: "http://localhost:8081/search/game",
+                    type: "GET",
+                    data: data,
+                    dataType: 'json',
+                    success: (data, status, xhr) => {
+                        if (data.length == 0) {
+                            $('#msg').text("No such game exists here/on this platform")
+                        }
+                        var tempHTML = ''
+                        data.forEach((game) => {
+                            tempHTML += `
+                             <div class="game_info" id="game_info">
+                                <div class="game_id" id="game_id">${game.gameid}</div>
+                                <div class="game_title" id="game_title">${game.title}</div>
+                                <div class="game_platform" id="game_platform">${game.platformname}</div>
+                                <div class="game_category" id="game_category">${game.year}</div>
+                                <div class="game_price" id="game_price">$${game.price}</div>
+                            </div> 
+                       `});
+
+                        $('#admin_game_container').append(`
+                                <div class="game_info" id="game_info">
+                                     <div class="game_id" id="game_id">Id</div>
+                                    <div class="game_title" id="game_title">Title</div>
+                                    <div class="game_platform" id="game_platform">Platform</div>
+                                    <div class="game_category" id="game_category">Year</div>
+                                    <div class="game_price" id="game_price">Price</div> 
+                                </div>
+                            </div>
+                        `)
+
+                        $('#admin_game_container').append(tempHTML)
+                    },
+                    error: (xhr, status, err) => {
+                        console.log(err)
+                    }
+                });
+            }
+            })
+    </script>
+
+</body>
+
+
+
+</html>

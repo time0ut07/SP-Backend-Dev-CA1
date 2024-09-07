@@ -1,0 +1,105 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/login.css" rel="stylesheet" />
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <title>Login</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+        <div class="navbar" id="navbar"></div>
+
+
+    <div class="login_form_container">
+        <div class="login_form">
+            <h2>Login</h2>
+            <div class="input_group" id="username">
+                <i class="fa fa-user"></i>
+                <input type="text" placeholder="Username" class="input_text" id="typeUserName" autocomplete="off" />
+            </div>
+            <div class="input_group" id="password">
+                <i class="fa fa-lock"></i>
+                <input type="password" placeholder="Password" class="input_text" id="typePassWord" autocomplete="off" />
+                <i class="fa fa-eye-slash" id="showPassword"></i>
+            </div>
+            <div class="button_group" id="login_button">
+                <a href="../home/index.html">Login</a>
+            </div>
+            <div class="message" id="message" style="margin-top: 15px"></div>
+            <div class="fotter">
+                <div class= "forgor" id="forgor">
+                    <a href="./changePass.html">Forgot Password?</a>
+                </div>
+                <div class="signup" id="signup">
+                    <a href="./signup.html">Sign-Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/login.js"></script>
+    <script src="../../js/navbar.js"></script>
+    <script>
+
+
+        $(document).ready(() => {
+            // user enter creds, check if correct, give them jwt token
+
+            $('#login_button').click(() => {
+                let data = {
+                    username: $('#typeUserName').val(),
+                    password: $('#typePassWord').val()
+                }
+
+                $.ajax ({
+                    url: 'http://localhost:8081/user/login',
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: (data, status, xhr) => {
+                        if (!data) {
+                            $('message').text("Failed to login");
+                            return;
+                        }
+
+                        localStorage.setItem("token", data.token); 
+                        localStorage.setItem("userData", data.userData);
+
+                        var localStorageData = localStorage.getItem('userData');
+                        var userData = JSON.parse(localStorageData);
+                        var memberType = userData[0].member_type;
+
+                        if (memberType == 'Admin') {
+                            window.location.href = 'http://localhost:3001/admin.html';
+                        } else {
+                            window.location.href = 'http://localhost:3001/index.html';
+                        }
+                    },
+                    error: (xhr, status, err) => {
+                        console.log(err)
+                        $('#message').text("Failed to login");
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
+
+</body>
+
+
+
+</html>

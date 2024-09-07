@@ -1,0 +1,51 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/adminNavbar.css" rel="stylesheet" />    
+    <title>Admin Panel</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="admin_navbar" id="admin_navbar"></div>
+
+    <div class="text_container" id="text_container">
+        <h2 class="welcome_text" id="welcome_text">Welcome to the</h2>
+        <p class="admin_panel" id="admin_panel">Admin Panel</p>
+        <p class="caution" id="caution">Do remember to exercise caution and avoid using the admin panel carelessly or
+            without proper consideration.</p>
+    </div>
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/adminNavbar.js"></script>
+    <script src="../../js/verifyAdmin.js"></script>
+
+    <script>
+        $(document).ready(() => {
+                try {
+                    let userid = userData[0].userid
+                } catch {
+                    location.assign('http://localhost:3001/error.html')
+                }
+        })
+    </script>
+
+</body>
+
+
+
+</html>

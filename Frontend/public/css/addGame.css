@@ -1,0 +1,93 @@
+.add_platform_title {
+  font-size: 50px;
+  text-align: center;
+  padding-top: 5%;
+}
+
+.input_group {
+  font-size: 25px;
+}
+
+.title,
+.year,
+.description,
+#fileUpload {
+  margin-left: 5%;
+}
+
+.year {
+  position: absolute;
+  margin-top: 1%
+}
+
+.description {
+  margin-top: 4%;
+  display: flex;
+  align-items: flex-start; /* Align the items to the top */
+}
+
+#Description {
+  width: 200px;
+  height: 40px;
+  vertical-align: top; /* Align the textarea content to the top */
+}
+
+#category {
+  margin-left: 80%;
+  margin-top: -6.5%;
+}
+
+#fileUpload {
+  margin-top: 10%
+}
+
+.category-label {
+  position: absolute;
+  margin-left: 80%;
+  transform: translateY(-0%); /* Move the label above the checkboxes */
+  margin-top: -4%;
+}
+
+.category-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.platform-label {
+  margin-top: -38%;
+  text-align: center;
+}
+
+#platformNprice {
+  text-align: center;
+  margin-top: 2%;
+  position: absolute;
+  right: 53%;
+  width: 2%; /* Adjust the width to your preference */
+}
+
+.platform-checkbox {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.price-input {
+  margin-left: 10px;
+}
+
+.buttons {
+  margin-left: 5%
+}
+
+#myfile, #submit, #reset {
+  font-size: 20px
+}
+
+#msg {
+  margin-top: 2%;
+  margin-left: 4.5%
+}
+

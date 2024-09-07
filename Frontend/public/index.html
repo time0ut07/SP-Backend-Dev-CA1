@@ -1,0 +1,142 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/homeIndex.css" rel="stylesheet" />
+    <title>Home</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="welcome_container">
+        <div class="welcome">
+            <h2>Welcome</h2>
+            <div class="name_of_user" id="name_of_user">Guest</div>
+        </div>
+    </div>
+
+    <div class="games_container">
+        <div class="games">
+            <h2>Games</h2>
+            <div class="text" id="text">
+                <span class="highlight">Explore a vast collection of brand new games for sale!</span><br>
+                Choose your platform, whether it's PC, console, or mobile,<br>
+                and start your gaming journey today.<br>
+                Don't miss out on the latest releases and popular titles.<br>
+                Shop now and unlock a world of entertainment and adventure.
+            </div>
+            <div class="button_stuff" id="button_stuff">
+                <button class="button" type="button">
+                    <a href="http://localhost:3001/games.html">
+                        <p>BUY NOW!</p>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile_container">
+        <div class="profile">
+            <h2>Profile</h2>
+            <div class="text" id="text">
+                <span class="highlight">Enhance your online presence by customizing your profile</span><br>
+                to reflect your unique personality.<br>
+                Take control of your account security with the<br>
+                added protection of two-factor authentication (2FA),<br>
+                ensuring only you can access your account.<br>
+                Sign up now!
+            </div>
+            <div class="button_stuff" id="button_stuff">
+                <button class="button" type="button">
+                    <a href="profile.html">
+                        <p>UPDATE</p>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="review_container">
+        <div class="review">
+            <h2>Review</h2>
+            <div class="text" id="text">
+                <span class="highlight">Connect with fellow gamers and join the discussion on your favorite
+                    games.</span><br>
+                Share your reviews and ratings to help others discover new gaming experiences.<br>
+                Be part of the community and contribute your insights to make gaming better for everyone.
+            </div>
+            <div class="button_stuff" id="button_stuff">
+                <button class="button" type="button">
+                    <a href="http://localhost:3001/games.html">
+                        <p>WRITE</p>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="empty_container"></div>
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/welcome.js"></script>
+    <script src="../../js/logout.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            var localStorageData = localStorage.getItem('userData');
+            var userData = JSON.parse(localStorageData);
+
+            var localStorageToken = localStorage.getItem('token');
+
+            if (!localStorageToken) {
+                $('#name_of_user').text('Guest')
+                return
+            }
+
+            let headers = {
+                authorization: 'Bearer ' + localStorageToken
+            }
+
+            data = {
+                userid: userData[0].userid
+            }
+
+            $.ajax({
+                headers:headers, 
+                url: "http://localhost:8081/get/username",
+                type: "GET",
+                data: data,
+                contentType: 'application/json',
+                dataType: 'json',
+                success: (data, status, xhr) => {
+                    if (!data) {
+                        return;
+                    }
+
+                    $('#name_of_user').text(userData[0].username)
+                     
+                },
+                error: (xhr, status, err) => {
+                    console.log(err)
+                    
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>

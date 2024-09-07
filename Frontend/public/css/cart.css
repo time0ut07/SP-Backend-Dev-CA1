@@ -1,0 +1,165 @@
+/* Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  letter-spacing: 1px;
+  background-color: #0c1022;
+}
+
+#cart_title {
+    text-align: center;
+    color: white;
+    margin-top: 8%;
+    margin-left: 40%;
+    font-size: 30px;
+    color: #00ccff;
+}
+
+#cart_container {
+    position: absolute;
+    width: 80%;
+    padding-bottom: 2%;
+    background-color: #B9A0B9;
+    text-align: center;
+    border-style: solid;
+    border-radius: 20px;
+    margin-top: 20%;
+    margin-left: 9%;
+    max-height: 99999vh;
+}
+
+#game_info {
+    position: relative;
+    font-size: 20px;
+    padding-bottom: 2%;
+    margin-top: 2%
+}
+
+#game_title {
+    text-align: left;
+    margin-left: 5%
+}
+
+#game_platform {
+    text-align: center;
+    margin-top: -1.8%;
+    margin-left: -10%
+}
+
+#game_price {
+    text-align: center;
+    margin-top: -1.8%;
+    margin-left: 20%
+}
+
+#game_time {
+    text-align: center;
+    margin-top: -1.8%;
+    margin-left: 50%
+}
+
+#game_rem {
+    text-align: center;
+    margin-top: -1.8%;
+    margin-left: 80%
+}
+
+#rem_btn {
+   position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -1%;
+    margin-top: -0.5%;
+    background-color: rgb(168, 70, 50)
+}
+
+#bottom_part {
+    text-align: center;
+    color:white;
+    margin-top: 15%;
+    margin-left: -5%;
+    font-size: 25px
+}
+
+#totalPrice {
+    position: absolute;
+    margin-left: -41%
+}
+
+#checkOut {
+    position: absolute;
+    margin-left: -150%;
+    margin-top: -8%;
+    font-size: 30px
+}
+
+#checkOut {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    justify-content: center;
+
+}
+
+#checkOut:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+#checkOut:active {
+    color: #0c1022
+}
+
+#checkOut:active:after {
+    background: transparent;
+}
+
+#checkOut:hover:before {
+    opacity: 1;
+}
+
+#checkOut:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #0c1022;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}

@@ -1,0 +1,113 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/navbar.css" rel="stylesheet" />
+    <link href="../../css/profile.css" rel="stylesheet" />
+    <title>Profile</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar" id="navbar"></div>
+
+    <div class="profile_container" id="profile_container"></div>
+
+    <div class="start" id="start">
+        <div class="title" id="title">Collection</div>
+    </div>
+
+    <div id="msg"></div>
+
+    <div id="Cmsg"></div>
+
+    <script src="../../js/navbar.js"></script>
+    <script src="../../js/logout.js"></script>
+
+    <script>
+        $(document).ready(() => { 
+
+            var localStorageToken = localStorage.getItem('token');
+
+            if (!localStorageToken) {
+                $('#msg').text('Sign in to view your own profile!')
+                $('#start').empty()
+                return
+            }
+
+            let headers = {
+                authorization: 'Bearer ' + localStorageToken
+            }
+            
+            $('#profile_container').append(`
+            <div class="profile_picture" id="profile_picture">
+                <img src="./images/Profile.jpeg" alt="">
+            </div>
+            <div class="profile_title" id="profile_title">
+                <h2>${userData[0].username}</h2>
+            </div>
+            <div class="profile_info" id="profile_info">
+                <div class="profile_email" id="profile_email">
+                    <p>${userData[0].email}</p>
+                </div>
+                <div class="profile_type" id="profile_type">
+                    <p>Member Type: ${userData[0].member_type}</p>
+                </div>
+            </div>`)
+
+            let data = {
+                userid: userData[0].userid
+            }
+
+            $.ajax({
+                headers: headers,
+                url: 'http://localhost:8081/owned/games',
+                type: "GET",
+                data: data,
+                contentType: "application/json",
+                dataType: "json",
+                success: (data, status, xhr) => {
+                    if (data.length == 0) {
+                        $('#Cmsg').append(`<p>You do not own any games currently, click <a href="http://localhost:3001/games.html" style="text-decoration: underline">here</a> to buy games!</p>`)
+                    } else {
+                    tempHTML = ""
+                    margin = 20
+                    data.forEach((game) => {
+                        tempHTML += `
+                            <div class="userGames_container" id="userGames_container" style="margin-top: ${margin}%">
+                                <div class="userGames" id="userGames">
+                                    <div class="game_title" id="game_title">${game.title}</div>
+                                    <div class="platform" id="platform">Platform: ${game.platformname}</div>
+                                    <div class="categories" id="categories">Category: ${game.categoryname}</div>
+                                </div>
+                            </div>
+                       `
+                    margin += 130
+                        
+                    });
+
+                        $('#start').append(tempHTML)
+                }
+                },
+                error: (xhr, status, err) => {
+                    console.log(err)
+                }
+            })
+
+
+        })
+    </script>
+
+</body>
+
+</html>

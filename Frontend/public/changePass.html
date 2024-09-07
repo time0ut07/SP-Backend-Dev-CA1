@@ -1,0 +1,100 @@
+<!-- Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/changePass.css" rel="stylesheet" />
+    <title>Change Password</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="login_form_container">
+        <div class="login_form">
+            <h2>Change Password</h2>
+
+            <div class="input_group" id="email">
+                <i class="fa fa-envelope"></i>
+                <input type="email" placeholder="Email" class="input_text" id="typeEmail" autocomplete="off" />
+            </div>
+            <div class="input_group" id="oldPassword">
+                <i class="fa fa-lock"></i>
+                <input type="password" placeholder="Current Password" class="input_text" id="typeOldPassword" autocomplete="off" />
+                <i class="fa fa-eye-slash" id="showOldPassword"></i>
+            </div>
+            <div class="input_group" id="password">
+                <i class="fa fa-lock"></i>
+                <input type="password" placeholder="New Password" class="input_text" id="typeNewPassword" autocomplete="off" />
+                <i class="fa fa-eye-slash" id="showPassword"></i>
+            </div>
+            <div class="input_group" id="confirmPassword">
+                <i class="fa fa-lock"></i>
+                <input type="password" placeholder="Confirm Password" class="input_text" id="typeConfirmPass" autocomplete="off" />
+                <i class="fa fa-eye-slash" id="showConfirmPassword"></i>
+            </div>
+
+            <div class="confirm_group" id="confirm_button">
+                <a href="login.html">Confirm</a>
+            </div>
+            <div class="fotter">
+                <div class="back" id="back">
+                    <a href="login.html">Login</a>
+                </div>
+                <div class="message" id="message" style="margin-top: -15px"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/login.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            $('#confirm_button').click(() => {
+
+                if (($('#typeEmail').val()) == "" || ($('#typeOldPassword').val()) == "" || ($('#typeNewPassword').val()) == "" || ($('#typeConfirmPass').val()) == "" ) {
+                    $('#message').text("Invalid Fields")
+                    return false
+                }
+
+                if (($('#typeNewPassword').val()) != ($('#typeConfirmPass').val())) {
+                    $('#message').text("Password does not match!");
+                    return false
+                }
+
+                let data = {
+                    newPassword: $('#typeConfirmPass').val(),
+                    oldPassword: $("#typeOldPassword").val(),
+                    email: $('#typeEmail').val()
+                }
+
+                $.ajax ({
+                    url: "http://localhost:8081/user/updatePass",
+                    type: "PUT",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: (data, status, xhr) => {
+                        $('#message').text("Successfully Updated Password");                     
+                    },
+                    error: (xhr, status, err) => {
+                        console.log(err)
+                        $('#message').text("Failed to Change Password");
+                    }
+                })
+
+                return false;
+            })
+        })
+    </script>
+
+</body>
+
+</html>

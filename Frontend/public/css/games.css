@@ -1,0 +1,279 @@
+/* Alden Chia Yu Xiang
+2205584
+DISM/FT/2A/01 */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  letter-spacing: 1px;
+  background-color: #0c1022;
+}
+
+#heading {
+  margin-top: 8%;
+}
+
+#title {
+  margin-left: 220%;
+  color: #00ccff;
+  position: relative;
+  font-size: 80px;
+}
+
+#search_box {
+  margin-top: 6%;
+  margin-left: 170%;
+  width: 300px;
+  height: 40px;
+  text-indent: 10px;
+}
+
+.fa-search {
+  position: absolute;
+  margin-top: 1.7%;
+  margin-left: 30%;
+  font-size: 20px;
+  color: #00ccff
+}
+
+.glowIcon {
+    text-shadow: 0 0 10px #00ccff;
+}
+
+#dropdown {
+  position: absolute;
+  margin-left: 55%;
+  margin-top: -2.5%;
+}
+
+#dropPlatforms {
+  width: 150px;
+  height: 40px;
+  text-indent: 10px;
+}
+
+.startOfGames {
+  margin-top: 90px
+}
+
+
+.games_container{
+    position: absolute;
+    width: 1300px;
+    height: 300px;
+    max-width: 4000px;
+    max-height: 4700px;
+    background: #040717;
+    border-radius: 50px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 310px;
+    left: 8%;
+    background-color: #00ccff;
+}
+
+.games_container:hover::before {
+  position: absolute;
+    width: 370%;
+    height: 470%;
+    content: '';
+    background-image: conic-gradient(transparent, transparent, transparent, #ee00ff);
+    animation: rotate_border 6s linear infinite;
+}
+
+.games_container:hover::after {
+  position: absolute;
+    width: 370%;
+    height: 470%;
+    content: '';
+    background-image: conic-gradient(transparent, transparent, transparent, #00ccff);
+    animation: rotate_border 6s linear infinite;
+    animation-delay: -3s;
+}
+
+@keyframes rotate_border{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.games{
+    position: absolute;
+    content: '';
+    background-color: #0c1022;
+    border-radius: 50px 5px;
+    inset: 5px;
+    padding: 60px 40px;
+    z-index: 10;
+    color: #00ccff;
+} 
+
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  margin-left: -30%;
+  mix-blend-mode:lighten;
+}
+
+.game_information {
+  position: relative;
+  height: 100%;
+  width: 50%;
+  padding-left: 50%;
+  transform: translateY(-100%);
+  white-space: nowrap;
+}
+
+#game_title {
+  position: relative;
+  font-size: 40px;
+  color: #00ccff; 
+  top: -10%;
+  width: 200px; /* Adjust the width as needed */
+  white-space: nowrap;
+  transform: translateX(80%);
+  text-align: center;
+}
+
+
+#game_title {
+  position: relative;
+  font-size: 40px;
+  color: #00ccff;
+  top: -10%;
+  width: 150px; /* Adjust the width as needed */
+  white-space: nowrap;
+  text-align: center;
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+#game_info {
+  font-size: 20px;
+  position: absolute;
+  color: white;
+  text-align: center;
+  margin-left: -12%
+}
+
+#year_release {
+  position: relative;
+  margin-top: 50px;
+  margin-left: 300px;
+  font-size: 20px;
+  text-align: center;
+}
+
+#year {
+  color: white;
+  margin-left: 350px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+#platform {
+  position: absolute;
+  bottom: 17%;
+  right: -40%;
+  text-align: center;
+  font-size: 20px;
+}
+
+#platforms {
+  font-size: 15px;
+  margin-top: 5px;
+    color: white;
+  position: relative;
+}
+.price {
+  position: absolute;
+  bottom: 17%;
+  right: -90%;
+  text-align: center;
+  font-size: 20px;
+}
+
+.data_price {
+  font-size: 15px;
+  margin-top: 5px;
+      color: white;
+  position: relative;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -50px;
+    position: absolute;
+    margin-left: -12%
+}
+
+.buy_btn {
+    width: 60%;
+}
+
+.btns p {
+  text-align: center;
+}
+
+.button {
+    width: 150px;
+    height: 50px;
+    background-color: #00ccff;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    color: #fff;
+}
+
+.button a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    color: #fff;
+}
+
+
+.empty_container {
+  position: absolute;
+  width: 1400px;
+  height: 1px;
+  max-width: 1400px;
+  max-height: 1px;
+  background: #0c1022;
+  border-radius: 50px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: 0; /* Update the margin-top value to remove the empty space */
+}
+
+.Your_games {
+  position: absolute;
+  color: white;
+  z-index: 0;
+}
+
+#msg {
+  margin-top: 25%;
+  color: white;
+  margin-left: 12%
+}
