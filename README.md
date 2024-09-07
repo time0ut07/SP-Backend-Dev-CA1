@@ -1,2 +1,12 @@
-# SP-Backend-Dev-CA1
-SP Y2S1 ST0503: Back-End Web Development CA1
+# SP Backend Dev CA1
+
+Assignment was to create both frontend and backend code for a game stall website. Used MySQL database.
+
+## Features
+
+- Login function
+- User authentication (JWT Token)
+- Search game function
+- Game reviews
+- Purchase games
+- Membership function
